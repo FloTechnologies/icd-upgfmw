@@ -156,4 +156,10 @@ void calculate_crc(Rawdata *r);
 
 void save_eui64list(void);
 
+void choose_run_ebl(void);
+void choose_upload_ebl(void);
+void flush_uart_data(void);
+void init_serial_FW(char* device);
+void init_serial_noFW(char* device);
+void updfrm_command(char* cmd);
 #endif
