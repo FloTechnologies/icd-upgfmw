@@ -54,7 +54,7 @@ int main(int argc, char** argv)
   close_uart_port();
 
   bzero(cmd, sizeof(cmd));
-  sprintf(cmd, "picocom -fn -b115200 -n %s %s", argv[3], argv[2]); //The picocom has to be modified to support -n option
+  sprintf(cmd, "upgfmw-picocom -fn -b115200 -n %s %s", argv[3], argv[2]); //The picocom has to be modified to support -n option
   status = system(cmd);
 
   init_serial_noFW(argv[2]);
