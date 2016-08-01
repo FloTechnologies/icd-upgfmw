@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include <fcntl.h>
-#include <sys/signal.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/mount.h>
@@ -21,8 +21,6 @@ int data_coming = FALSE ;
 void flush_uart_data(void)
 {
   char buffer[MAX_BUFFER_SIZE];
-  int size;
-  int i;
 
   bzero(buffer, MAX_BUFFER_SIZE);
   sprintf(buffer, "\r\n\r\n");
@@ -32,8 +30,6 @@ void flush_uart_data(void)
 void updfrm_command(char* cmd)
 {
   char buffer[MAX_BUFFER_SIZE];
-  int size;
-  int i;
 
   bzero(buffer, MAX_BUFFER_SIZE);
   sprintf(buffer, "%s\r\n",cmd);
@@ -42,7 +38,6 @@ void updfrm_command(char* cmd)
 
 void choose_upload_ebl(void)
 {
-  char cmd[] = "1";
   write(fd, "1", 1);
 }
 
@@ -50,8 +45,6 @@ void choose_run_ebl(void)
 {
   char buffer[MAX_BUFFER_SIZE] ;
   char cmd[] = "2\r\n";
-  int size;
-  int i;
 
   bzero(buffer, MAX_BUFFER_SIZE);
   memcpy(buffer, cmd, sizeof(cmd));
@@ -94,7 +87,6 @@ void receive_uart_data(void)
     start = time(NULL);
     while(data_coming)
     {
-        int status;
         len = read(fd, &ch , 1);
 	
         if(len>0)
@@ -131,7 +123,6 @@ struct termios oldtio,newtio;
   bzero(&newtio, sizeof(newtio)); 
 
   saio.sa_handler = uart_handler;
-  saio.sa_mask;// = 0;
   saio.sa_flags = 0;
   saio.sa_restorer = NULL;
   sigaction(SIGIO,&saio,NULL);
@@ -169,7 +160,6 @@ struct termios oldtio,newtio;
   bzero(&newtio, sizeof(newtio)); 
 
   saio.sa_handler = uart_handler;
-  saio.sa_mask;// = 0;
   saio.sa_flags = 0;
   saio.sa_restorer = NULL;
   sigaction(SIGIO,&saio,NULL);
